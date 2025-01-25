@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Available Books</h1>
+
+        <!-- Search Form -->
+        <form action="/search" method="get" class="search-form">
+            <input type="text" name="query_title" placeholder="Search by title" value="{{ query_title or '' }}">
+            <input type="text" name="query_author" placeholder="Search by author" value="{{ query_author or '' }}">
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- Displaying Books -->
+        <ul class="book-list">
+            {% for book in books %}
+            <li class="book-item">
+                <strong>{{ book[1] }}</strong><br>
+                Author: {{ book[2] }}<br>
+                Category: {{ book[4] }}<br>
+                <a href="{{ url_for('download_file', filename=book[3]) }}" class="download-link">Download</a>
+            </li>
+            {% else %}
+            <li>No books found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
